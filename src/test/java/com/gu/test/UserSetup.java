@@ -3,6 +3,7 @@ package com.gu.test;
 import com.gu.test.actions.ui.OpenPageUIAction;
 import com.gu.test.actors.Reader;
 import com.gu.test.actors.Readers;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 
 /**
@@ -12,17 +13,22 @@ public class UserSetup {
 
     private Readers readers;
     private Configuration config;
+	private boolean needProxy;
 
-    public UserSetup(Readers readers, Configuration config)
-    {
+	public UserSetup(Readers readers, Configuration config) {
         this.config = config;
         this.readers = readers;
     }
 
-    @Given("^(.*) is a reader$")
+	@Before("@httpMock")
+	public void needProxy() {
+		needProxy = true;
+	}
+
+	@Given("^(.*) is a reader$")
     public Reader isAReader(String actorLabel) {
-        Reader aReader = new Reader();
-        readers.addActor(actorLabel, aReader);
+		Reader aReader = new Reader(needProxy);
+		readers.addActor(actorLabel, aReader);
         return aReader;
     }
 

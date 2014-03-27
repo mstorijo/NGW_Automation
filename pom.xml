@@ -13,7 +13,12 @@
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
-            <groupId>hu.meza</groupId>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>[1.45,)</version>
+        </dependency>
+        <dependency>
+        <groupId>hu.meza</groupId>
             <artifactId>aao</artifactId>
             <version>[2.0.2,)</version>
         </dependency>
