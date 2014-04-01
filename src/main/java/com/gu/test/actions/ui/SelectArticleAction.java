@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by torilau on 24/03/14.
- */
+
 public class SelectArticleAction extends UIAction {
 
 	private WebElement element;

@@ -11,9 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by torilau on 20/03/14.
- */
+
 public class Reader extends Actor {
 
 	private HttpClientWrapper httpClient;

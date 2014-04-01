@@ -3,9 +3,7 @@ package com.gu.test.actions.ui;
 import com.gu.test.actions.UIAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-/**
- * Created by torilau on 20/03/14.
- */
+
 public class SelectEditionAction extends UIAction {
 
     private final String edition;
@@ -18,7 +16,6 @@ public class SelectEditionAction extends UIAction {
     @Override
     public void execute() {
        WebDriver driver = driver();
-      // driver.findElement(By.cssSelector("[data-edition=\""+ edition + "\"]")).click();
         driver.findElement(By.cssSelector("[data-edition= \"" + edition + "\"]")).click();
 
     }

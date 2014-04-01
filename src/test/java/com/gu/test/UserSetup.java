@@ -6,9 +6,6 @@ import com.gu.test.actors.Readers;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 
-/**
- * Created by torilau on 20/03/14.
- */
 public class UserSetup {
 
     private Readers readers;

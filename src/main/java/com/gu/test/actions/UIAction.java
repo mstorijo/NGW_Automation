@@ -7,9 +7,6 @@ import org.openqa.selenium.WebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by torilau on 20/03/14.
- */
 public abstract class UIAction implements Action{
     private WebDriver driver;
 

@@ -1,19 +1,20 @@
 package com.gu.test;
 
 import com.gu.test.actions.ui.ExpandSectionAction;
+import com.gu.test.actions.ui.HideSectionAction;
 import com.gu.test.actions.ui.SelectArticleAction;
 import com.gu.test.actions.ui.SelectEditionAction;
 import com.gu.test.actors.Reader;
 import com.gu.test.actors.Readers;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
-/**
- * Created by torilau on 20/03/14.
- */
 public class NavigationSteps {
 
 	private Readers readers;
@@ -57,6 +58,11 @@ public class NavigationSteps {
 		aReader.execute(action);
 	}
 
+    @When("^(.*) switches back to the UK edition$")
+    public void readerSwitchesBackToTheUKEdition(String actorLabel) throws Throwable {
+        readerSwitchesToTheUKEdition(actorLabel);
+    }
+
 	@Then("^the UK edition fronts should load$")
 	public void theUKEditionFrontsShouldLoad() throws Throwable {
 		WebDriver driver = ((Reader) readers.lastActor()).driver();
@@ -69,7 +75,6 @@ public class NavigationSteps {
 		Reader aReader = readers.getReader(actorLabel);
 		SelectArticleAction action = new SelectArticleAction();
 		aReader.execute(action);
-
 	}
 
 
@@ -77,17 +82,31 @@ public class NavigationSteps {
 	public void readerExpandsASection(String actorLabel) throws Throwable {
 		Reader aReader = readers.getReader(actorLabel);
 		ExpandSectionAction action = new ExpandSectionAction();
-		aReader.execute(action);
-
+	    aReader.execute(action);
 	}
 
 	@Then("^more headlines in the section should appear$")
 	public void moreHeadlinesInSectionShouldAppear() throws Throwable {
-		//to do
+        WebDriver driver = ((Reader) readers.lastActor()).driver();
 	}
 
 	@When("^^(.*) hides a section$")
-	public void readerHidesASection() throws Throwable {
-		//to do
+	public void readerHidesASection(String actorLabel) throws Throwable {
+        Reader aReader = readers.getReader(actorLabel);
+        HideSectionAction action = new HideSectionAction();
+        aReader.execute(action);
 	}
+
+    @Then("^the section should be hidden$")
+    public void theSectionShouldBeHidden() throws Throwable {
+        WebDriver driver = ((Reader) readers.lastActor()).driver();
+        Assert.assertTrue(driver.findElement(By.xpath("//[contains(@class,\"show-more--hidden\"")).isDisplayed());
+    }
+
+    @And("^hide should be replaced by show$")
+    public void hideShouldBeReplacedByShow() throws Throwable {
+        WebDriver driver = ((Reader) readers.lastActor()).driver();
+        Assert.assertTrue(driver.findElement(By.xpath("//*[data-link-name='Hide'][1]/text-\"Show")).isDisplayed());
+
+    }
 }

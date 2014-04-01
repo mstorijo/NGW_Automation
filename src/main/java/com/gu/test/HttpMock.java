@@ -31,7 +31,7 @@ public class HttpMock {
 		wireMockServer.stop();
 	}
 
-	public void assertGetRequest(String beacon) {
-		verify(getRequestedFor(urlEqualTo(beacon)));
+	public void assertGetRequest(String url) {
+		verify(getRequestedFor(urlEqualTo(url)));
 	}
 }

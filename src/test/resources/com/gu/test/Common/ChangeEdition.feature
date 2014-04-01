@@ -17,7 +17,8 @@ Feature: As Vicky I want to change which edition I am in
     Then the US edition fronts should load
 
 
-  Scenario: changing from US to UK from an article
-    Given Vicky is viewing an article
-    And she switches to the UK edition
+  Scenario: changing from US to UK from US fronts
+    Given Vicky is viewing the front page
+    When she switches to the US edition
+    And she switches back to the UK edition
     Then the UK edition fronts should load

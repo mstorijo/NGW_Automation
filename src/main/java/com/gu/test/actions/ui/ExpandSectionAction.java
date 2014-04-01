@@ -4,9 +4,6 @@ import com.gu.test.actions.UIAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-/**
- * Created by torilau on 24/03/14.
- */
 public class ExpandSectionAction extends UIAction {
     private String expandSectionSelector;
 
