@@ -10,7 +10,8 @@ public class ExpandSectionAction extends UIAction {
 
     public ExpandSectionAction()
     {
-        this.expandSectionSelector = "(//button[@data-link-name=\"Show more | 0\"])[1]";
+        this.expandSectionSelector = ".collection__show-more__icon:nth-child(1)";
+        //.collection__show-more__icon:nth-child(1)
 
     }
 
@@ -18,7 +19,7 @@ public class ExpandSectionAction extends UIAction {
     @Override
     public void execute(){
         WebDriver driver = driver();
-        driver.findElement(By.xpath(expandSectionSelector));
+        driver.findElement(By.cssSelector(expandSectionSelector)).click();
     }
 
     @Override

@@ -5,10 +5,10 @@ import com.gu.test.actions.UIAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class HideSectionAction extends UIAction{
+public class ShowSectionAction extends UIAction{
 
 
-    public HideSectionAction()
+    public ShowSectionAction()
     {
 
     }
@@ -16,8 +16,8 @@ public class HideSectionAction extends UIAction{
 
     public void execute() {
         WebDriver driver = driver();
-        //this is not a mistake. The hide button has data link name Show.
-        driver.findElement(By.xpath("//button[@data-link-name = \"Show\"][1]")).click();
+        //this is not a mistake. The hide button has data link name Hide.
+        driver.findElement(By.xpath("//button[@data-link-name = \"Hide\"][1]")).click();
 
     }
 

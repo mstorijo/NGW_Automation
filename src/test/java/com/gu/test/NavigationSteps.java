@@ -88,6 +88,7 @@ public class NavigationSteps {
 	@Then("^more headlines in the section should appear$")
 	public void moreHeadlinesInSectionShouldAppear() throws Throwable {
         WebDriver driver = ((Reader) readers.lastActor()).driver();
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@data-link-name=\"trail | 16\"]")).isDisplayed());
 	}
 
 	@When("^^(.*) hides a section$")
@@ -100,13 +101,13 @@ public class NavigationSteps {
     @Then("^the section should be hidden$")
     public void theSectionShouldBeHidden() throws Throwable {
         WebDriver driver = ((Reader) readers.lastActor()).driver();
-        Assert.assertTrue(driver.findElement(By.xpath("//[contains(@class,\"show-more--hidden\"")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector(".container--rolled-up-hide:nth-child(1)")).isDisplayed());
     }
 
     @And("^hide should be replaced by show$")
     public void hideShouldBeReplacedByShow() throws Throwable {
         WebDriver driver = ((Reader) readers.lastActor()).driver();
-        Assert.assertTrue(driver.findElement(By.xpath("//*[data-link-name='Hide'][1]/text-\"Show")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@data-link-name='Hide'][1]")).isDisplayed());
 
     }
 }
