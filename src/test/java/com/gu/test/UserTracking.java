@@ -1,8 +1,11 @@
 package com.gu.test;
 
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import com.gu.test.actors.Readers;
 import cucumber.api.java.en.Then;
 import hu.meza.aao.DefaultScenarioContext;
+
+import java.util.List;
 
 public class UserTracking {
 
@@ -21,7 +24,7 @@ public class UserTracking {
 
 		String beacon = "http://beacon.www.theguardian.com/count/pv.gif";
 
-		httpMock.assertGetRequest(beacon);
+		List<LoggedRequest> requests = httpMock.findAllRequestsTo("hits.theguardian.com");
 
 	}
 }

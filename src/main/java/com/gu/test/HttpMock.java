@@ -2,29 +2,41 @@ package com.gu.test;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.http.Request;
+import com.github.tomakehurst.wiremock.http.RequestListener;
+import com.github.tomakehurst.wiremock.http.Response;
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.any;
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 public class HttpMock {
 
 	private final WireMockServer wireMockServer;
 	private final Configuration config;
+	private List<LoggedRequest> requests = new ArrayList<LoggedRequest>();
 
 	public HttpMock(Configuration config) {
 		this.config = config;
 
-		wireMockServer = new WireMockServer(new WireMockConfiguration().port(8080));
+		wireMockServer =
+			new WireMockServer(new WireMockConfiguration().port(8080).enableBrowserProxying(true));
 	}
 
 	public void start() {
 		wireMockServer.start();
-		stubFor(any(urlMatching(".*")).willReturn(aResponse().proxiedFrom(config.baseUrl())));
+		wireMockServer.addMockServiceRequestListener(new RequestListener() {
+			@Override
+			public void requestReceived(Request request, Response response) {
+				requests.add(LoggedRequest.createFrom(request));
+			}
+		});
+
+		//		stubFor(any(urlMatching(".*")).willReturn(aResponse().proxiedFrom(config.baseUrl())));
 	}
 
 	public void stop() {
@@ -34,4 +46,15 @@ public class HttpMock {
 	public void assertGetRequest(String url) {
 		verify(getRequestedFor(urlEqualTo(url)));
 	}
+
+	public List<LoggedRequest> findAllRequestsTo(String host) {
+		List<LoggedRequest> result = new ArrayList<LoggedRequest>();
+		for (LoggedRequest request : requests) {
+			if (request.getHeader("Host").equals(host)) {
+				result.add(request);
+			}
+		}
+		return result;
+	}
+
 }
