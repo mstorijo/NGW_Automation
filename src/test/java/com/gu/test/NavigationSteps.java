@@ -1,6 +1,7 @@
 package com.gu.test;
 
 import com.gu.test.actions.asserts.AssertSectionIsExpanded;
+import com.gu.test.actions.asserts.AssertSectionIsHidden;
 import com.gu.test.actions.ui.ExpandSectionAction;
 import com.gu.test.actions.ui.HideSectionAction;
 import com.gu.test.actions.ui.SelectArticleAction;
@@ -103,13 +104,18 @@ public class NavigationSteps {
         Reader aReader = readers.getReader(actorLabel);
         HideSectionAction action = new HideSectionAction();
         aReader.execute(action);
+
+		context.setSubject(action.parent());
+
 	}
 
     @Then("^the section should be hidden$")
     public void theSectionShouldBeHidden() throws Throwable {
-        WebDriver driver = ((Reader) readers.lastActor()).driver();
-        Assert.assertTrue(driver.findElement(By.cssSelector(".container--rolled-up-hide:nth-child(1)")).isDisplayed());
-    }
+		Reader reader = ((Reader) readers.lastActor());
+		AssertSectionIsHidden action = new AssertSectionIsHidden((WebElement) context.getSubject());
+
+		reader.execute(action);
+	}
 
     @And("^hide should be replaced by show$")
     public void hideShouldBeReplacedByShow() throws Throwable {
