@@ -39,7 +39,7 @@ public class ExpandSectionAction extends UIAction {
 	}
 
 	@Override
-    public <T> T copyOf() {
-        return null;
-    }
+	public ExpandSectionAction copyOf() {
+		return new ExpandSectionAction();
+	}
 }
