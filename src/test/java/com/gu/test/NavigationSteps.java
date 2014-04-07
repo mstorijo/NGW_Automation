@@ -1,28 +1,32 @@
 package com.gu.test;
 
+import com.gu.test.actions.asserts.AssertSectionIsExpanded;
 import com.gu.test.actions.ui.ExpandSectionAction;
 import com.gu.test.actions.ui.HideSectionAction;
 import com.gu.test.actions.ui.SelectArticleAction;
 import com.gu.test.actions.ui.SelectEditionAction;
 import com.gu.test.actors.Reader;
 import com.gu.test.actors.Readers;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import hu.meza.aao.DefaultScenarioContext;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 
 public class NavigationSteps {
 
 	private Readers readers;
+	private final DefaultScenarioContext context;
 	private Configuration config;
 
-	public NavigationSteps(Readers readers, Configuration config) {
+	public NavigationSteps(Readers readers, Configuration config, DefaultScenarioContext context) {
 		this.config = config;
 		this.readers = readers;
+		this.context = context;
 	}
 
 	@When("^(.*) switches to the US edition$")
@@ -83,12 +87,15 @@ public class NavigationSteps {
 		Reader aReader = readers.getReader(actorLabel);
 		ExpandSectionAction action = new ExpandSectionAction();
 	    aReader.execute(action);
+		context.setSubject(action.parent());
 	}
 
 	@Then("^more headlines in the section should appear$")
 	public void moreHeadlinesInSectionShouldAppear() throws Throwable {
         WebDriver driver = ((Reader) readers.lastActor()).driver();
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@data-link-name=\"trail | 16\"]")).isDisplayed());
+
+		AssertSectionIsExpanded action = new AssertSectionIsExpanded((WebElement) context.getSubject());
+		readers.lastActor().execute(action);
 	}
 
 	@When("^^(.*) hides a section$")
